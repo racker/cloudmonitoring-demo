@@ -1,0 +1,5 @@
+div.error
+  h1 Error Processing Request
+  div.notice #{error.toString()}
+    pre
+      code #{error.stack}
