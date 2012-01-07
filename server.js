@@ -19,12 +19,7 @@
 var express = require('express');
 var http = require('http');
 var os = require('os');
-var app = express.createServer();
-var port = 80;
-
-if (os.type() == "Darwin") {
-  port = 8080;
-}
+var path = require('path');
 
 function sslRedirectMiddleware(req, res, next) {
   var host = req.headers['host'] ? req.headers['host'] : 'cloudmonitoring.nodejitsu.com'; 
@@ -39,13 +34,41 @@ function sslRedirectMiddleware(req, res, next) {
   }
 }
 
-
-app.use(sslRedirectMiddleware);
-app.get('/', function(req, res){
+function indexHandler(req, res){
   res.writeHead(200, {'Content-Type': 'text/html'});
   res.write('<h1>hello, i know nodejitsu.</h1>')
   res.end();
-});
+}
 
-console.log('Binding to http://0.0.0.0:' + port + '/');
-app.listen(port, '0.0.0.0');
+function registerUrls(app) {
+  var staticRoot, iconPath, viewsRoot;
+
+  staticRoot = path.join(__dirname, 'static');
+  iconPath = path.join(staticRoot, 'favicon.ico');
+  viewsRoot = path.join(__dirname, 'views');
+
+  app.set('view engine', 'jade');
+  app.set('view options', { layout: false });
+
+  app.use(sslRedirectMiddleware);
+
+  app.get('/favicon.ico', express.favicon(iconPath));
+  app.use('/static/', express['static'](staticRoot));
+
+  app.get('/', indexHandler);
+}
+
+function main() {
+  var port = 80;
+  var app = express.createServer();
+
+  if (os.type() == "Darwin") {
+    port = 8080;
+  }
+
+  registerUrls(app);
+  console.log('Binding to http://0.0.0.0:' + port + '/');
+  app.listen(port, '0.0.0.0');
+}
+
+main();
