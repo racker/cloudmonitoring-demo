@@ -9,7 +9,10 @@ block content
       | tenantId: #{data.result.tenantId}
       | token: #{data.result.token}
       | expires: #{data.result.expires}
-  form(method='post', action='/login')
+      script(type='text/javascript')
+        loadStuff('#{data.result.tenantId}', '#{data.result.token}');
+  - else
+    form(method='post', action='/login')
     - if (data.next)
       input(type='hidden', name='next', value='#{data.next}')
     div.clearfix

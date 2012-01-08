@@ -4,9 +4,13 @@
   "scripts": {
     "start": "server.js"
   },
-  "version": "0.1.0-4",
+  "version": "0.1.0-5",
   "dependencies": {
     "express": "2.5.x",
-    "jade": "0.20.0"
+    "jade": "0.20.0",
+    "async": "0.1.x",
+    "logmagic": "0.1.x",
+    "request": "2.9.x",
+    "sprintf": "0.1.x"
   }
 }
