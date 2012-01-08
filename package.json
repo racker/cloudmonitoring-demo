@@ -1,10 +1,10 @@
 {
-  "name": "cloudmonitoring-demo",
+  "name": "cloudmonitoring",
   "subdomain": "cloudmonitoring",
   "scripts": {
     "start": "server.js"
   },
-  "version": "0.1.0-3",
+  "version": "0.1.0-4",
   "dependencies": {
     "express": "2.5.x",
     "jade": "0.20.0"

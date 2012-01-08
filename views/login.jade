@@ -4,6 +4,11 @@ block title
   h1 Log In
 
 block content
+  - if (data.result)
+    div
+      | tenantId: #{data.result.tenantId}
+      | token: #{data.result.token}
+      | expires: #{data.result.expires}
   form(method='post', action='/login')
     - if (data.next)
       input(type='hidden', name='next', value='#{data.next}')
